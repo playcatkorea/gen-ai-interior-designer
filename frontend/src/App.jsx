@@ -15,11 +15,12 @@ import {
   Col,
   Divider,
 } from "antd";
-import { BulbFilled, BulbOutlined } from "@ant-design/icons";
+import { BulbFilled, BulbOutlined, GlobalOutlined } from "@ant-design/icons";
 import ImageUpload from "./components/ImageUpload";
 import Footer from "./components/Footer";
 import MarkdownCard from "./components/MarkdownCard";
 import ReactMarkdown from "react-markdown";
+import { translations, getTranslation } from "./locales/translations";
 
 const { Header, Content } = Layout;
 const { Title, Text } = Typography;
@@ -41,15 +42,26 @@ function App() {
     const saved = localStorage.getItem("darkMode");
     return saved ? JSON.parse(saved) : false;
   });
+  const [language, setLanguage] = useState(() => {
+    const saved = localStorage.getItem("language");
+    return saved || "ko";
+  });
 
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState(null);
   const resultRef = useRef(null);
   const { defaultAlgorithm, darkAlgorithm } = theme;
 
+  // 번역 헬퍼 함수
+  const t = (key) => getTranslation(language, key);
+
   useEffect(() => {
     localStorage.setItem("darkMode", JSON.stringify(isDarkMode));
   }, [isDarkMode]);
+
+  useEffect(() => {
+    localStorage.setItem("language", language);
+  }, [language]);
 
   useEffect(() => {
     if (result && resultRef.current) {
@@ -60,7 +72,7 @@ function App() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!homeImage) {
-      toast.error("Please upload an image of your space");
+      toast.error(t("uploadRequired"));
       return;
     }
 
@@ -91,11 +103,11 @@ function App() {
       setResult(newResult);
       setHistory((prev) => [newResult, ...prev]);
 
-      toast.success("Design generated successfully!");
+      toast.success(t("success"));
     } catch (error) {
       console.error("Design generation error:", error);
       const errorMessage = error.response?.data?.detail || error.message || "Unknown error occurred";
-      toast.error(`디자인 생성 실패: ${errorMessage}`);
+      toast.error(`${t("error")}: ${errorMessage}`);
     } finally {
       setLoading(false);
     }
@@ -124,9 +136,16 @@ return (
         }}
       >
         <Title level={3} style={{ margin: 0, color: textColor, fontSize: "1.5rem", flex: 1 }}>
-          🏡 Virtual Home Designer
+          {t("title")}
         </Title>
-        <div style={{ marginLeft: "auto" }}>
+        <div style={{ marginLeft: "auto", display: "flex", gap: 12, alignItems: "center" }}>
+          <Button
+            onClick={() => setLanguage(language === "ko" ? "en" : "ko")}
+            icon={<GlobalOutlined />}
+            style={{ display: "flex", alignItems: "center" }}
+          >
+            {language === "ko" ? "EN" : "한글"}
+          </Button>
           <Switch
             checked={isDarkMode}
             onChange={setIsDarkMode}
@@ -139,7 +158,7 @@ return (
       <Content style={{ padding: "2rem 1rem" }}>
         <div style={{ maxWidth: "1200px", margin: "0 auto", width: "100%" }}>
           <Title level={2} style={{ color: textColor, textAlign: "center", marginBottom: "2rem" }}>
-            AI Interior / Exterior Makeover
+            {t("subtitle")}
           </Title>
 
           {/* FORM */}
@@ -147,63 +166,64 @@ return (
             <Row gutter={[24, 24]} justify="center" style={{ flexWrap: "wrap" }}>
               <Col xs={24} sm={24} md={24} lg={12}>
                 <ImageUpload
-                  label="Upload Home Image"
+                  label={t("uploadImage")}
                   onImageChange={setHomeImage}
                   isDarkMode={isDarkMode}
+                  t={t}
                 />
               </Col>
 
               <Col xs={24} sm={24} md={24} lg={12}>
                 <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
                   <div>
-                    <Text style={{ color: textColor }}>Design Type</Text>
+                    <Text style={{ color: textColor }}>{t("designType")}</Text>
                     <Select
-                      placeholder="Interior or Exterior?"
+                      placeholder={t("designTypePlaceholder")}
                       style={{ width: "100%", marginTop: 4 }}
                       value={designType}
                       onChange={setDesignType}
                     >
-                      <Option value="interior">Interior</Option>
-                      <Option value="exterior">Exterior</Option>
+                      <Option value="interior">{t("interior")}</Option>
+                      <Option value="exterior">{t("exterior")}</Option>
                     </Select>
                   </div>
 
                   <div>
-                    <Text style={{ color: textColor }}>Room Type</Text>
+                    <Text style={{ color: textColor }}>{t("roomType")}</Text>
                     <Select
-                      placeholder="Select room type"
+                      placeholder={t("roomTypePlaceholder")}
                       style={{ width: "100%", marginTop: 4 }}
                       value={roomType}
                       onChange={setRoomType}
                     >
-                      <Option value="living">Living Room</Option>
-                      <Option value="bedroom">Bedroom</Option>
-                      <Option value="kitchen">Kitchen</Option>
-                      <Option value="bathroom">Bathroom</Option>
-                      <Option value="balcony">Balcony</Option>
-                      <Option value="garden">Garden</Option>
+                      <Option value="living">{t("living")}</Option>
+                      <Option value="bedroom">{t("bedroom")}</Option>
+                      <Option value="kitchen">{t("kitchen")}</Option>
+                      <Option value="bathroom">{t("bathroom")}</Option>
+                      <Option value="balcony">{t("balcony")}</Option>
+                      <Option value="garden">{t("garden")}</Option>
                     </Select>
                   </div>
 
                   <div>
-                    <Text style={{ color: textColor }}>Design Style</Text>
+                    <Text style={{ color: textColor }}>{t("designStyle")}</Text>
                     <Select
-                      placeholder="Select a style"
+                      placeholder={t("designStylePlaceholder")}
                       style={{ width: "100%", marginTop: 4 }}
                       value={style}
                       onChange={setStyle}
                     >
-                      <Option value="modern">Modern</Option>
-                      <Option value="minimalist">Minimalist</Option>
-                      <Option value="rustic">Rustic</Option>
-                      <Option value="bohemian">Bohemian</Option>
-                      <Option value="classic">Classic</Option>
+                      <Option value="modern">{t("modern")}</Option>
+                      <Option value="minimalist">{t("minimalist")}</Option>
+                      <Option value="rustic">{t("rustic")}</Option>
+                      <Option value="bohemian">{t("bohemian")}</Option>
+                      <Option value="classic">{t("classic")}</Option>
                     </Select>
                   </div>
 
                   <Row gutter={16}>
                     <Col xs={12}>
-                      <Text style={{ color: textColor }}>Background Color</Text>
+                      <Text style={{ color: textColor }}>{t("backgroundColor")}</Text>
                       <Input
                         type="color"
                         value={backgroundColor}
@@ -218,7 +238,7 @@ return (
                       />
                     </Col>
                     <Col xs={12}>
-                      <Text style={{ color: textColor }}>Foreground Color</Text>
+                      <Text style={{ color: textColor }}>{t("foregroundColor")}</Text>
                       <Input
                         type="color"
                         value={foregroundColor}
@@ -238,13 +258,13 @@ return (
             </Row>
 
             <div style={{ marginTop: 32 }}>
-              <Text style={{ color: textColor }}>Additional Instructions</Text>
+              <Text style={{ color: textColor }}>{t("additionalInstructions")}</Text>
               <Input.TextArea
                 rows={4}
                 value={instructions}
                 onChange={(e) => setInstructions(e.target.value)}
                 style={{ width: "100%", marginTop: 8 }}
-                placeholder="Example: Prefer warm lighting, eco-friendly materials, modern look, etc."
+                placeholder={t("instructionsPlaceholder")}
               />
             </div>
 
@@ -256,7 +276,7 @@ return (
                 loading={loading}
                 style={{ width: 200, height: 48 }}
               >
-                {loading ? "Designing..." : "Generate Design"}
+                {loading ? t("generating") : t("generate")}
               </Button>
             </div>
           </form>
@@ -266,7 +286,7 @@ return (
             <div ref={resultRef} style={{ marginTop: 64, textAlign: "center" }}>
               <Divider />
               <Title level={3} style={{ color: textColor }}>
-                Your AI-Designed Space
+                {t("resultTitle")}
               </Title>
               <img
                 src={result.resultImage}
@@ -293,7 +313,7 @@ return (
             <div style={{ marginTop: 80 }}>
               <Divider />
               <Title level={3} style={{ color: textColor, marginBottom: 32 }}>
-                Previous Results
+                {t("historyTitle")}
               </Title>
               <Row gutter={[24, 24]}>
                 {history.map((item) => (

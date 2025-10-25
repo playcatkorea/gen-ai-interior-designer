@@ -5,7 +5,7 @@ import { InboxOutlined, CloseCircleOutlined } from "@ant-design/icons";
 const { Title } = Typography;
 const { Dragger } = Upload;
 
-const ImageUpload = ({ label, onImageChange, isDarkMode = false }) => {
+const ImageUpload = ({ label, onImageChange, isDarkMode = false, t = (key) => key }) => {
   const [preview, setPreview] = useState(null);
 
   const uploadProps = {
@@ -17,13 +17,13 @@ const ImageUpload = ({ label, onImageChange, isDarkMode = false }) => {
     beforeUpload: (file) => {
       const isImage = file.type.startsWith("image/");
       if (!isImage) {
-        message.error("You can only upload image files!");
+        message.error(t("imageOnly"));
         return Upload.LIST_IGNORE;
       }
 
       const isLt10M = file.size / 1024 / 1024 < 10;
       if (!isLt10M) {
-        message.error("Image must be smaller than 10MB!");
+        message.error(t("imageTooLarge"));
         return Upload.LIST_IGNORE;
       }
 
@@ -111,13 +111,13 @@ const ImageUpload = ({ label, onImageChange, isDarkMode = false }) => {
             className="ant-upload-text"
             style={{ color: isDarkMode ? "#e5e5e5" : "#333" }}
           >
-            Click or drag an image here to upload
+            {t("dragDropText")}
           </p>
           <p
             className="ant-upload-hint"
             style={{ fontSize: 12, color: isDarkMode ? "#a1a1aa" : "#666" }}
           >
-            Image only • Max size: 10MB
+            {t("imageHint")}
           </p>
         </Dragger>
       )}
