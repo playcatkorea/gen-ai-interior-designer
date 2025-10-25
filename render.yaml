@@ -14,10 +14,11 @@ services:
         value: 3.11.0
 
   # Frontend Service
-  - type: static
+  - type: web
     name: gen-ai-interior-frontend
+    env: node
     buildCommand: "cd frontend && npm install && npm run build"
-    staticPublishPath: frontend/dist
+    startCommand: "cd frontend && npx serve -s dist -l $PORT"
     envVars:
       - key: VITE_API_URL
         fromService:
