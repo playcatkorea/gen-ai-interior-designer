@@ -56,7 +56,8 @@ export const translations = {
     imageOnly: "이미지만 업로드 가능합니다!",
     imageTooLarge: "이미지는 10MB보다 작아야 합니다!",
     dragDropText: "클릭하거나 이미지를 여기로 드래그하세요",
-    imageHint: "이미지만 • 최대 크기: 10MB",
+    imageHint: "JPG, PNG, WebP, HEIC, HEIF • 최대 10MB",
+    imageHintDetailed: "지원 형식: JPEG (.jpg, .jpeg), PNG (.png), WebP (.webp), HEIC (.heic), HEIF (.heif) | 최대 파일 크기: 10MB",
 
     // 네비게이션
     home: "홈",
@@ -137,7 +138,8 @@ export const translations = {
     imageOnly: "You can only upload image files!",
     imageTooLarge: "Image must be smaller than 10MB!",
     dragDropText: "Click or drag an image here to upload",
-    imageHint: "Image only • Max size: 10MB",
+    imageHint: "JPG, PNG, WebP, HEIC, HEIF • Max 10MB",
+    imageHintDetailed: "Supported formats: JPEG (.jpg, .jpeg), PNG (.png), WebP (.webp), HEIC (.heic), HEIF (.heif) | Max file size: 10MB",
 
     // Navigation
     home: "Home",
