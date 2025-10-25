@@ -57,6 +57,28 @@ export const translations = {
     imageTooLarge: "이미지는 10MB보다 작아야 합니다!",
     dragDropText: "클릭하거나 이미지를 여기로 드래그하세요",
     imageHint: "이미지만 • 최대 크기: 10MB",
+
+    // 네비게이션
+    home: "홈",
+    myProjects: "내 프로젝트",
+
+    // 프로젝트 저장
+    saveProject: "프로젝트 저장",
+    projectName: "프로젝트 이름",
+    projectNamePlaceholder: "프로젝트 이름을 입력하세요",
+    saved: "프로젝트가 저장되었습니다!",
+    saveFailed: "프로젝트 저장 실패",
+
+    // 추천
+    recommendations: "추천",
+    designTips: "디자인 팁",
+    youtubeTutorials: "YouTube 튜토리얼",
+    colorPalette: "컬러 팔레트",
+    loadingRecommendations: "추천 정보 불러오는 중...",
+
+    // 사용자
+    userEmail: "이메일",
+    userEmailPlaceholder: "example@email.com",
   },
 
   en: {
@@ -116,6 +138,28 @@ export const translations = {
     imageTooLarge: "Image must be smaller than 10MB!",
     dragDropText: "Click or drag an image here to upload",
     imageHint: "Image only • Max size: 10MB",
+
+    // Navigation
+    home: "Home",
+    myProjects: "My Projects",
+
+    // Project saving
+    saveProject: "Save Project",
+    projectName: "Project Name",
+    projectNamePlaceholder: "Enter project name",
+    saved: "Project saved successfully!",
+    saveFailed: "Failed to save project",
+
+    // Recommendations
+    recommendations: "Recommendations",
+    designTips: "Design Tips",
+    youtubeTutorials: "YouTube Tutorials",
+    colorPalette: "Color Palette",
+    loadingRecommendations: "Loading recommendations...",
+
+    // User
+    userEmail: "Email",
+    userEmailPlaceholder: "example@email.com",
   }
 };
 
