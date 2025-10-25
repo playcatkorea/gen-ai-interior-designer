@@ -336,12 +336,24 @@ const Home = ({ isDarkMode, t, userEmail }) => {
                         size="large"
                         value={style}
                         onChange={setStyle}
+                        showSearch
+                        optionFilterProp="children"
                       >
                         <Option value="modern">{t("modern")}</Option>
                         <Option value="minimalist">{t("minimalist")}</Option>
-                        <Option value="rustic">{t("rustic")}</Option>
-                        <Option value="bohemian">{t("bohemian")}</Option>
+                        <Option value="scandinavian">{t("scandinavian")}</Option>
+                        <Option value="contemporary">{t("contemporary")}</Option>
+                        <Option value="industrial">{t("industrial")}</Option>
+                        <Option value="midcentury">{t("midcentury")}</Option>
                         <Option value="classic">{t("classic")}</Option>
+                        <Option value="traditional">{t("traditional")}</Option>
+                        <Option value="rustic">{t("rustic")}</Option>
+                        <Option value="farmhouse">{t("farmhouse")}</Option>
+                        <Option value="bohemian">{t("bohemian")}</Option>
+                        <Option value="coastal">{t("coastal")}</Option>
+                        <Option value="asian">{t("asian")}</Option>
+                        <Option value="eclectic">{t("eclectic")}</Option>
+                        <Option value="vintage">{t("vintage")}</Option>
                       </Select>
                     </div>
 

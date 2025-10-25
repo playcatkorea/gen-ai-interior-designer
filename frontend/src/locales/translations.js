@@ -36,6 +36,16 @@ export const translations = {
     rustic: "러스틱",
     bohemian: "보헤미안",
     classic: "클래식",
+    industrial: "인더스트리얼",
+    scandinavian: "스칸디나비안",
+    contemporary: "컨템포러리",
+    traditional: "전통",
+    coastal: "해안풍",
+    farmhouse: "팜하우스",
+    midcentury: "미드센추리 모던",
+    asian: "아시안/동양풍",
+    eclectic: "절충주의",
+    vintage: "빈티지/레트로",
 
     // 버튼
     generating: "디자인 생성 중...",
@@ -118,6 +128,16 @@ export const translations = {
     rustic: "Rustic",
     bohemian: "Bohemian",
     classic: "Classic",
+    industrial: "Industrial",
+    scandinavian: "Scandinavian",
+    contemporary: "Contemporary",
+    traditional: "Traditional",
+    coastal: "Coastal",
+    farmhouse: "Farmhouse",
+    midcentury: "Mid-Century Modern",
+    asian: "Asian/Oriental",
+    eclectic: "Eclectic",
+    vintage: "Vintage/Retro",
 
     // Buttons
     generating: "Designing...",
