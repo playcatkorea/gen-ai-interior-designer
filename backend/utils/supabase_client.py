@@ -19,9 +19,15 @@ class SupabaseClient:
 
     def __init__(self):
         self.base_url = f"{SUPABASE_URL}/rest/v1"
+
+        # 키 검증
+        auth_key = SUPABASE_SERVICE_KEY or SUPABASE_KEY
+        if not auth_key or auth_key == "":
+            raise ValueError("SUPABASE_KEY or SUPABASE_SERVICE_KEY must be set")
+
         self.headers = {
             "apikey": SUPABASE_KEY or SUPABASE_SERVICE_KEY,
-            "Authorization": f"Bearer {SUPABASE_SERVICE_KEY or SUPABASE_KEY}",
+            "Authorization": f"Bearer {auth_key}",
             "Content-Type": "application/json",
             "Prefer": "return=representation"
         }

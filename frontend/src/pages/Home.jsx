@@ -185,7 +185,13 @@ const Home = ({ isDarkMode, t, userEmail }) => {
       setProjectName("");
     } catch (error) {
       console.error("Failed to save project:", error);
-      toast.error(t("saveFailed"));
+
+      // 503 = Supabase 비활성화
+      if (error.response?.status === 503) {
+        toast.error("프로젝트 저장 기능이 현재 비활성화되어 있습니다. 로컬에서 이미지를 다운로드하세요.");
+      } else {
+        toast.error(t("saveFailed") + ": " + (error.response?.data?.detail || error.message));
+      }
     } finally {
       setSaving(false);
     }

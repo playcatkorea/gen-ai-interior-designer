@@ -6,9 +6,18 @@ from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
 from typing import Optional, List
 from datetime import datetime
-from utils.supabase_client import supabase
 
 router = APIRouter()
+
+# Supabase 클라이언트 초기화 (선택적)
+try:
+    from utils.supabase_client import supabase
+    SUPABASE_AVAILABLE = True
+except (ValueError, Exception) as e:
+    SUPABASE_AVAILABLE = False
+    supabase = None
+    print(f"⚠️  Supabase not available: {str(e)}")
+    print("   Project management features will be disabled.")
 
 
 class ProjectCreate(BaseModel):
@@ -47,6 +56,11 @@ class DesignHistoryCreate(BaseModel):
 @router.post("/projects")
 async def create_project(project: ProjectCreate):
     """새 프로젝트 생성"""
+    if not SUPABASE_AVAILABLE:
+        raise HTTPException(
+            status_code=503,
+            detail="Project management is unavailable. Supabase configuration is missing."
+        )
     try:
         # 사용자 확인 또는 생성
         users = await supabase.select("users", filters={"email": project.user_email})
@@ -91,6 +105,11 @@ async def create_project(project: ProjectCreate):
 @router.get("/projects")
 async def get_projects(user_email: Optional[str] = None, limit: int = 100):
     """프로젝트 목록 조회"""
+    if not SUPABASE_AVAILABLE:
+        raise HTTPException(
+            status_code=503,
+            detail="Project management is unavailable. Supabase configuration is missing."
+        )
     try:
         filters = {}
         if user_email:
@@ -119,6 +138,11 @@ async def get_projects(user_email: Optional[str] = None, limit: int = 100):
 @router.get("/projects/{project_id}")
 async def get_project(project_id: str):
     """특정 프로젝트 조회"""
+    if not SUPABASE_AVAILABLE:
+        raise HTTPException(
+            status_code=503,
+            detail="Project management is unavailable. Supabase configuration is missing."
+        )
     try:
         projects = await supabase.select("projects", filters={"id": project_id})
 
@@ -147,6 +171,11 @@ async def get_project(project_id: str):
 @router.patch("/projects/{project_id}")
 async def update_project(project_id: str, update: ProjectUpdate):
     """프로젝트 업데이트"""
+    if not SUPABASE_AVAILABLE:
+        raise HTTPException(
+            status_code=503,
+            detail="Project management is unavailable. Supabase configuration is missing."
+        )
     try:
         update_data = update.model_dump(exclude_unset=True)
         update_data["updated_at"] = datetime.utcnow().isoformat()
@@ -174,6 +203,11 @@ async def update_project(project_id: str, update: ProjectUpdate):
 @router.delete("/projects/{project_id}")
 async def delete_project(project_id: str):
     """프로젝트 삭제"""
+    if not SUPABASE_AVAILABLE:
+        raise HTTPException(
+            status_code=503,
+            detail="Project management is unavailable. Supabase configuration is missing."
+        )
     try:
         await supabase.delete("projects", filters={"id": project_id})
 
@@ -189,6 +223,11 @@ async def delete_project(project_id: str):
 @router.post("/design-history")
 async def add_design_history(history: DesignHistoryCreate):
     """디자인 히스토리 추가"""
+    if not SUPABASE_AVAILABLE:
+        raise HTTPException(
+            status_code=503,
+            detail="Project management is unavailable. Supabase configuration is missing."
+        )
     try:
         result = await supabase.insert("design_history", history.model_dump())
 

@@ -42,7 +42,14 @@ const MyProjects = ({ isDarkMode, t, userEmail }) => {
       }
     } catch (error) {
       console.error("Failed to fetch projects:", error);
-      toast.error("프로젝트 목록을 불러오는데 실패했습니다");
+
+      // 503 = Supabase 비활성화
+      if (error.response?.status === 503) {
+        toast.error("프로젝트 관리 기능이 현재 비활성화되어 있습니다.");
+        setProjects([]);
+      } else {
+        toast.error("프로젝트 목록을 불러오는데 실패했습니다");
+      }
     } finally {
       setLoading(false);
     }
@@ -57,7 +64,12 @@ const MyProjects = ({ isDarkMode, t, userEmail }) => {
       fetchProjects();
     } catch (error) {
       console.error("Failed to delete project:", error);
-      toast.error("프로젝트 삭제에 실패했습니다");
+
+      if (error.response?.status === 503) {
+        toast.error("프로젝트 관리 기능이 현재 비활성화되어 있습니다.");
+      } else {
+        toast.error("프로젝트 삭제에 실패했습니다");
+      }
     }
   };
 
