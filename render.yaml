@@ -1,8 +1,9 @@
 services:
-  # Backend Service
+  # Backend Service (무료 티어)
   - type: web
     name: gen-ai-interior-backend
     env: python
+    plan: free
     buildCommand: "cd backend && pip install poetry && poetry install"
     startCommand: "cd backend && poetry run uvicorn main:app --host 0.0.0.0 --port $PORT"
     envVars:
@@ -13,12 +14,13 @@ services:
       - key: PYTHON_VERSION
         value: 3.11.0
 
-  # Frontend Service
+  # Frontend Service (무료 티어)
   - type: web
     name: gen-ai-interior-frontend
-    env: node
+    env: static
+    plan: free
     buildCommand: "cd frontend && npm install && npm run build"
-    startCommand: "cd frontend && npm run preview -- --host 0.0.0.0 --port $PORT"
+    staticPublishPath: frontend/dist
     envVars:
       - key: VITE_API_URL
         fromService:
